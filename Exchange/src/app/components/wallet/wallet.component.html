@@ -1,30 +1,21 @@
-
-<mat-card *ngIf="wallets$ | async as wallets" class="scrollable-content fw-bold m-t-s m-l-l m-b-l flex fw-nowrap" style="width: 100%; max-width: 400px; height: 500px;">
-
+<mat-card *ngIf="wallets$ | async as wallets" class="scrollable-content fw-bold m-t-s m-b-l flex fw-nowrap">
   <mat-card-header>
     <div mat-card-avatar>
       <mat-icon style="font-size: 36px;">
         smart_toy
       </mat-icon>
     </div>
-    <mat-card-title>
+    <mat-card-title style="padding-top: 10px;">
       Bot Wallets
     </mat-card-title>
-    <mat-card-subtitle>
-      Select bot for more details
-    </mat-card-subtitle>
   </mat-card-header>
 
-  <button mat-raised-button (click)="this.new=!this.new">
-    {{this.new ? 'Cancel' : 'Create New'}}
-  </button>
-
-  <mat-card-content *ngIf="!new else create">
+  <mat-card-content class="h-400 p-t-s" *ngIf="!new else create">
     <mat-list *ngFor="let wallet of wallets | keyvalue">
-      <mat-list-item >
+      <mat-list-item class="p-t-l">
         <div class="container">
           <div class="row">
-            ID: {{wallet.value.id}}
+            Wallet ID: {{wallet.value.id}}
           </div>
           <div class="row">
             <div class="col-4 nopadding">{{wallet.value.name}}</div>
@@ -38,10 +29,10 @@
 
   <ng-template #create style="padding-top: 5px;">
     <mat-card-content>
-      <form [formGroup]="form">
-        <mat-form-field style="padding-top: 10px;">
+      <form [formGroup]="form" style="display:flex; justify-content: space-between; align-items:center;">
+        <mat-form-field>
           <mat-label>Symbol name</mat-label>
-          <mat-select style="padding-top: 10px;">
+          <mat-select>
             <mat-option value="dogeusd" (click)="change('DOGE-USD')">DOGE-USD</mat-option>
             <mat-option value="ethusd" (click)="change('ETH-USD')">ETH-USD</mat-option>
             <mat-option value="adausd" (click)="change('ADA-USD')">ADA-USD</mat-option>
@@ -54,28 +45,32 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Method</mat-label>
-          <mat-select style="padding-top: 10px;">
+          <mat-select>
             <mat-option value="ichimoku" (click)="changeMethod('ICHIMOKU CLOUD')">ICHIMOKU CLOUD</mat-option>
             <mat-option value="rsi" (click)="changeMethod('RSI')">RSI</mat-option>
             <mat-option value="macd" (click)="changeMethod('MACD')">MACD</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field >
+        <mat-form-field>
           <mat-label>Wallet ID</mat-label>
           <input formControlName="wallet_id" matInput>
         </mat-form-field>
-        <mat-form-field >
+        <mat-form-field>
           <mat-label>Amount ($)</mat-label>
           <input formControlName="amount" matInput>
         </mat-form-field>
-        
       </form>
-
-      <button mat-raised-button (click)="createWallet()">New wallet</button>
-
+      <div
+        style="padding-top: 10px; padding-bottom: 2px; display: flex; justify-content: start; flex-direction: column; flex-wrap: wrap;">
+        <button mat-raised-button class="btn-success" (click)="createWallet()">Complete Wallet</button>
+      </div>
     </mat-card-content>
   </ng-template>
-
+  <mat-card-actions style="display: flex; justify-content: start; flex-direction: column; flex-wrap: wrap;">
+    <button mat-raised-button (click)="this.new=!this.new">
+      {{this.new ? 'Cancel' : 'Create New'}}
+    </button>
+  </mat-card-actions>
 </mat-card>
 
 
